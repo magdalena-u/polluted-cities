@@ -1,0 +1,64 @@
+import {
+    createEl,
+    append
+}
+from './index'
+
+//add function to read more
+export function readMore() {
+    const read = document.querySelectorAll('p');
+    read.forEach(function (item) {
+        item.addEventListener('click', showDescription)
+    })
+}
+
+function showDescription() {
+    const parent = this.parentNode;
+    parent.querySelector('p').innerHTML = '';
+    const searchTerm = parent.querySelector('span').innerHTML;
+    const wiki = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro=&explaintext=&formatversion=2&titles=${searchTerm}`;
+
+    fetch(wiki)
+        .then(function (res) {
+            return res.json()
+        })
+        .then(function (data) {
+            //create elements in app
+            const description = createEl('div');
+            const less = createEl('p');
+            //append element
+            appendElApp(parent, description, less);
+            //add class
+            classElApp(description, less);
+            //inner HTML
+            less.innerHTML = 'read less -'
+            //information abou the city
+            if (data.query.pages[0].invalid || data.query.pages[0].missing || data.query.pages[0].extract == "") {
+                description.innerHTML = "No information about the city"
+            } else description.innerHTML = data.query.pages[0].extract;
+
+            less.addEventListener('click', readLess)
+        })
+}
+
+//append elements in app
+const appendElApp = (parent, description, less) => {
+    append(parent, description);
+    append(parent, less);
+}
+
+//add class in app
+const classElApp = (description, less) => {
+    description.classList.add('city_text');
+    less.classList.add('less');
+}
+
+function readLess() {
+    const parent = this.parentNode;
+    let description = parent.querySelector('.city_text');
+    let less = parent.querySelector('.less')
+    let readMore = parent.querySelector('p');
+    readMore.innerHTML = `read more +`;
+    description.remove()
+    less.remove()
+}

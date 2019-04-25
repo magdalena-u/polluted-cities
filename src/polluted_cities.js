@@ -4,31 +4,29 @@ import {
 
 import {
     readMore
-} from './city_description'
+} from './city_description';
 
 import {
     createEl,
     append
 }
-from './index'
+from './index';
 
-const search = document.querySelector('.fa-search')
 let flag = false;
 
-function showCities(e) {
-    e.preventDefault()
+export function showCities() {
     const url = `https://api.openaq.org/v1/latest?limit=10&country=${countryCode}&parameter=pm25&order_by=measurements[0].value&sort=desc`;
     let cityCont = document.getElementById('cities_container');
 
     if (flag) {
         const cityDivs = document.querySelectorAll('.city_div');
-        cityDivs.forEach(city => cityCont.removeChild(city))
+        cityDivs.forEach(city => cityCont.removeChild(city));
         flag = !flag;
     }
 
     fetch(url)
         .then(function (res) {
-            return res.json()
+            return res.json();
         })
         .then(function (data) {
             cityCont = data.results;
@@ -48,7 +46,7 @@ function showCities(e) {
                 const cityCity = city.city;
                 citySpan.innerHTML = cityCity.replace('CCAA', '').replace('Com. ', '').replace('Warszawa', 'Warsaw');
                 p.innerHTML = `read more +`;
-                readMore()
+                readMore();
             })
         })
     flag = true;
@@ -56,7 +54,7 @@ function showCities(e) {
 
 //append elements
 const appendElApp = (div, number, numberSpan, cityItem, citySpan, p) => {
-    const container = document.getElementById('cities_container')
+    const container = document.getElementById('cities_container');
     append(number, numberSpan);
     append(div, number);
     append(div, cityItem);
@@ -71,5 +69,3 @@ const classElApp = (div, number, cityItem) => {
     number.classList.add('number');
     cityItem.classList.add('city_item');
 }
-
-search.addEventListener('click', showCities)

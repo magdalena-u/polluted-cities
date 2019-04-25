@@ -2,6 +2,16 @@ import {
     populateStorage
 } from "./storage_data";
 
+import {
+    showCities
+} from './polluted_cities';
+
+import {
+    createEl,
+    append,
+}
+from './index'
+
 const input = document.getElementById('country');
 const countryAll = [{
         name: 'Poland',
@@ -27,17 +37,11 @@ const countryResult = document.querySelector('.country_list');
 
 // check the value of input
 export const getValue = () => {
-    cleanList()
+    cleanList();
     let currentValue = document.getElementById('country').value;
     if (currentValue.length > 0) {
-        for (let i = 0; i < countryAll.length; i++) {
-            const lowCountry = countryAll[i].name.toLowerCase();
-            const lowValue = currentValue.toLowerCase();
-            if (lowCountry.indexOf(lowValue) != -1) {
-                countryList.push(countryAll[i].name);
-            }
-        }
-        showList()
+        input.addEventListener('keydown', pressEnter);
+        checkList(currentValue);
     }
 }
 
@@ -48,10 +52,33 @@ const cleanList = () => {
 }
 
 
+const pressEnter = (e) => {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        const countryValue = document.getElementById('country').value;
+        checkCode(countryValue);
+        showCities();
+        cleanList();
+        populateStorage();
+    }
+}
+
+//check the list
+const checkList = (currentValue) => {
+    for (let i = 0; i < countryAll.length; i++) {
+        const lowCountry = countryAll[i].name.toLowerCase();
+        const lowValue = currentValue.toLowerCase();
+        if (lowCountry.indexOf(lowValue) != -1) {
+            countryList.push(countryAll[i].name);
+        }
+    }
+    showList()
+}
+
 //show list of countries
 const showList = () => {
     for (let i = 0; i < countryList.length; i++) {
-        countryResult.innerHTML += `<li class="country_item">${countryList[i]}</li>`
+        countryResult.innerHTML += `<li class="country_item">${countryList[i]}</li>`;
     }
     chooseCountry()
 }
@@ -62,7 +89,8 @@ const chooseCountry = () => {
     items.forEach(item => item.addEventListener('click', function () {
         document.getElementById('country').value = item.innerHTML;
         let countryValue = item.innerHTML;
-        checkCode(countryValue)
+        checkCode(countryValue);
+        showCities();
         cleanList();
         populateStorage();
     }))
@@ -72,9 +100,13 @@ const chooseCountry = () => {
 const checkCode = (countryValue) => {
     for (let i = 0; i < countryAll.length; i++) {
         if (countryValue === countryAll[i].name) {
-            countryCode = countryAll[i].code;
+            return countryCode = countryAll[i].code;
+        } else {
+            countryCode = '';
         }
     }
+    // notSupport()
 }
 
-input.addEventListener('keyup', getValue)
+input.addEventListener('keyup', getValue);
+input.addEventListener('click', getValue);

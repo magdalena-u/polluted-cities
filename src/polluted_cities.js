@@ -35,18 +35,18 @@ function showCities(e) {
             return cityCont.map(function (city) {
                 //create elements in app
                 const div = createEl('div');
-                const number = createEl('div')
-                const numberSpan = createEl('span')
-                const cityItem = createEl('div')
-                const citySpan = createEl('span')
-                const p = createEl('p')
-                //append elements
+                const number = createEl('div');
+                const numberSpan = createEl('span');
+                const cityItem = createEl('div');
+                const citySpan = createEl('span');
+                const p = createEl('p');
                 appendElApp(div, number, numberSpan, cityItem, citySpan, p);
-                //add class
-                classElApp(div, number, cityItem)
+                classElApp(div, number, cityItem);
                 //inner HTML
-                numberSpan.innerHTML = `${city.measurements[0].value}`;
-                citySpan.innerHTML = `${city.city.replace('CCAA','').replace('Com. ','').replace('Warszawa','Warsaw')}`;
+                const cityValue = city.measurements[0].value;
+                numberSpan.innerHTML = Math.round(cityValue);
+                const cityCity = city.city;
+                citySpan.innerHTML = cityCity.replace('CCAA', '').replace('Com. ', '').replace('Warszawa', 'Warsaw');
                 p.innerHTML = `read more +`;
                 readMore()
             })
@@ -54,7 +54,7 @@ function showCities(e) {
     flag = true;
 }
 
-//append elements in app
+//append elements
 const appendElApp = (div, number, numberSpan, cityItem, citySpan, p) => {
     const container = document.getElementById('cities_container')
     append(number, numberSpan);

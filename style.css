@@ -135,6 +135,10 @@ input {
   width: 100%;
 }
 
+.not_support {
+  text-align: center;
+  color: #b72c3e;
+}
 .city_div {
   position: relative;
   display: flex;

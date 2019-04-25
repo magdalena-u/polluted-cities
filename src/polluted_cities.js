@@ -1,5 +1,6 @@
 import {
-    countryCode
+    countryCode,
+    removeElSupport
 } from './country_list';
 
 import {
@@ -12,7 +13,7 @@ import {
 }
 from './index';
 
-let flag = false;
+export let flag = false;
 
 export function showCities() {
     const url = `https://api.openaq.org/v1/latest?limit=10&country=${countryCode}&parameter=pm25&order_by=measurements[0].value&sort=desc`;

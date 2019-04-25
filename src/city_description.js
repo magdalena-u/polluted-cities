@@ -1,6 +1,6 @@
 import {
     createEl,
-    append
+    append,
 }
 from './index'
 
@@ -8,7 +8,7 @@ from './index'
 export function readMore() {
     const read = document.querySelectorAll('p');
     read.forEach(function (item) {
-        item.addEventListener('click', showDescription)
+        item.addEventListener('click', showDescription);
     })
 }
 
@@ -20,7 +20,7 @@ function showDescription() {
 
     fetch(wiki)
         .then(function (res) {
-            return res.json()
+            return res.json();
         })
         .then(function (data) {
             //create elements in app
@@ -31,7 +31,7 @@ function showDescription() {
             funcOfLess(less);
             //information about the city
             if (data.query.pages[0].invalid || data.query.pages[0].missing || data.query.pages[0].extract == "") {
-                description.innerHTML = "No information about the city"
+                description.innerHTML = "No information about the city";
             } else description.innerHTML = data.query.pages[0].extract;
         })
 }
@@ -50,21 +50,21 @@ const classElApp = (description, less) => {
 
 //add function and text to less
 const funcOfLess = (less) => {
-    less.innerHTML = 'read less -'
-    less.addEventListener('click', readLess)
+    less.innerHTML = 'read less -';
+    less.addEventListener('click', readLess);
 }
 
 function readLess() {
     const parent = this.parentNode;
     const description = parent.querySelector('.city_text');
-    const less = parent.querySelector('.less')
+    const less = parent.querySelector('.less');
     const more = parent.querySelector('p');
     more.innerHTML = `read more +`;
-    removeEl(description, less)
+    removeEl(description, less);
 }
 
 //remove elements
 const removeEl = (description, less) => {
-    description.remove()
-    less.remove()
+    description.remove();
+    less.remove();
 }

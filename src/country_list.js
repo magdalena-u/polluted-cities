@@ -10,7 +10,7 @@ import {
     createEl,
     append
 }
-from './index'
+from './index';
 
 const input = document.getElementById('country');
 const countryAll = [{
@@ -38,11 +38,11 @@ let flagSupport = false;
 
 // check the value of input
 export const getValue = () => {
-    cleanList()
+    cleanList();
     let currentValue = document.getElementById('country').value;
     if (currentValue.length > 0) {
-        input.addEventListener('keydown', pressEnter)
-        checkList(currentValue)
+        input.addEventListener('keydown', pressEnter);
+        checkList(currentValue);
     }
 }
 
@@ -55,12 +55,14 @@ const cleanList = () => {
 
 const pressEnter = (e) => {
     if (e.keyCode == 13) {
-        e.preventDefault()
-        const countryValue = document.getElementById('country').value;
+        e.preventDefault();
+        const currentValue = document.getElementById('country').value;
+        const countryValue = currentValue[0].toUpperCase() + currentValue.slice(1);
         checkCode(countryValue);
         showCities();
         cleanList();
         populateStorage();
+        input.blur();
     }
 }
 
@@ -73,14 +75,14 @@ const checkList = (currentValue) => {
             countryList.push(countryAll[i].name);
         }
     }
-    showList()
+    showList();
 }
 
 
 //show list of countries
 const showList = () => {
     for (let i = 0; i < countryList.length; i++) {
-        countryResult.innerHTML += `<li class="country_item">${countryList[i]}</li>`
+        countryResult.innerHTML += `<li class="country_item">${countryList[i]}</li>`;
     }
     chooseCountry()
 }
@@ -91,7 +93,7 @@ const chooseCountry = () => {
     items.forEach(item => item.addEventListener('click', function () {
         document.getElementById('country').value = item.innerHTML;
         let countryValue = item.innerHTML;
-        checkCode(countryValue)
+        checkCode(countryValue);
         showCities();
         cleanList();
         populateStorage();
@@ -102,7 +104,7 @@ const chooseCountry = () => {
 const checkCode = (countryValue) => {
     for (let i = 0; i < countryAll.length; i++) {
         if (countryValue === countryAll[i].name) {
-            removeElSupport()
+            removeElSupport();
             return countryCode = countryAll[i].code;
         } else {
             countryCode = '';
@@ -121,7 +123,7 @@ const createElApp = () => {
     const div = createEl('div');
     const p1 = createEl('p');
     const p2 = createEl('p');
-    appendElAp(div, p1, p2)
+    appendElAp(div, p1, p2);
 
 }
 //not support - append elements
@@ -139,12 +141,13 @@ const classElApp = (div) => {
     div.classList.add('not_support');
 }
 
-//not support - inner HTMLa
+//not support - inner HTML
 const innerApp = (p1, p2) => {
     p1.innerHTML = 'Sorry, we do not support this data.';
     p2.innerHTML = 'Choose one of available country.';
 }
 
+//not support - remove element
 export const removeElSupport = () => {
     if (flagSupport) {
         const supportInfo = document.querySelector('.not_support');

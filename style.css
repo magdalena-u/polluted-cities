@@ -109,14 +109,6 @@ input {
   background-color: #f2d500;
 }
 
-.fa-search {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
 .title {
   text-align: center;
   margin-bottom: 1vh;
@@ -129,6 +121,10 @@ input {
   margin-bottom: 5vh;
 }
 
+.hover {
+  background-color: #f2d500;
+}
+
 /* city item */
 
 #cities_container {
@@ -139,6 +135,7 @@ input {
   text-align: center;
   color: #b72c3e;
 }
+
 .city_div {
   position: relative;
   display: flex;
@@ -147,7 +144,7 @@ input {
 }
 
 .number {
-  --number-size: 40px;
+  --number-size: 45px;
   position: relative;
   width: var(--number-size);
   height: var(--number-size);
@@ -191,6 +188,7 @@ input {
     width: 80vw;
     margin: 0 auto;
   }
+
   .flag_container {
     width: 45%;
     align-self: flex-end;
@@ -199,6 +197,7 @@ input {
   .number {
     --number-size: 50px;
   }
+
   .city_item {
     padding: 0.5em 0.5em;
   }
